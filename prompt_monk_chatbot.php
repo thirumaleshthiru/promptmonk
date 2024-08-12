@@ -199,12 +199,34 @@ function formatText($text) {
         .formatted-text h2 {
             font-size: 15px;
         }
+        
+        /* Loader Styles */
+        .loader {
+            border: 16px solid #f3f3f3; /* Light grey */
+            border-top: 16px solid #3498db; /* Blue */
+            border-radius: 50%;
+            width: 120px;
+            height: 120px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -60px;
+            margin-left: -60px;
+            z-index: 1000;
+            display: none; /* Hidden by default */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
     </style>
 </head>
 <body>
     <?php include 'navbar.php'; ?>
     <div class="chat-container">
-        <div class="chat-header">AI Text Generator</div>
+        <div class="chat-header">Gemini AI</div>
         <div class="results" id="results">
             <?php foreach ($results as $result): ?>
                 <div class="result">
@@ -215,8 +237,11 @@ function formatText($text) {
                         <button type="submit" class="delete-button" onclick="return confirm('Are you sure you want to delete this prompt?')">&times;</button>
                     </form>
                 </div>
+                <br>
             <?php endforeach; ?>
         </div>
+        <br>
+        
         <div class="input-container">
             <form method="post" style="width: 100%;">
                 <textarea name="prompt" placeholder="Enter your prompt here..." required></textarea>
@@ -224,8 +249,23 @@ function formatText($text) {
             </form>
         </div>
     </div>
+    
+    <!-- Loader Element -->
+    <div class="loader" id="loader"></div>
+    
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const form = document.querySelector('form');
+        const loader = document.getElementById('loader');
+
+        form.addEventListener('submit', function() {
+            loader.style.display = 'block'; // Show loader
+        });
+    });
+    </script>
 </body>
 </html>

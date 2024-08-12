@@ -117,7 +117,7 @@ $stmt->close();
             object-fit: cover;
             margin-right: 20px;
         }
-        .profile-header h2 {
+        .profile-header h2  {
             font-size: 30px;
             font-weight: 600;
             color: #674188;
@@ -176,6 +176,10 @@ $stmt->close();
         .btn-view:hover {
             background-color: #E2BFD9;
             border-color: #E2BFD9;
+        }
+        h1, h2,h3{
+            font-size:15px;
+            
         }
         @media (max-width: 767px) {
             .profile-header {

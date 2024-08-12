@@ -70,7 +70,7 @@ foreach ($likes_dislikes as $ld) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"> <!-- Font Awesome -->
-    <title>View Prompt</title>
+    <title><?php echo htmlspecialchars($prompt['title']); ?></title>
     <style>
         body {
             background-color: #F7EFE5; /* Lightest background color */
@@ -139,6 +139,10 @@ foreach ($likes_dislikes as $ld) {
             background-color: #C8A1E0; /* Lighter purple on hover */
             border-color: #C8A1E0;
         }
+        .btn-primary{
+            background-color: #674188;
+            border:white;
+        }
     </style>
 </head>
 <body>
@@ -147,11 +151,11 @@ foreach ($likes_dislikes as $ld) {
     <div class="container mt-5">
         <h2><?php echo htmlspecialchars($prompt['title']); ?></h2>
         <div class="mt-3">
-         <i>  
-        <a href="http://localhost/promptmonk/<?php echo urlencode($username); ?>" class="link">
-                by <?php echo htmlspecialchars($username); ?>
-            </a>
-    </i> 
+            <i>
+                <a href="http://localhost/promptmonk/<?php echo urlencode($username); ?>" class="link">
+                    by <?php echo htmlspecialchars($username); ?>
+                </a>
+            </i>
         </div>
         <p><?php echo nl2br($prompt['description']); ?></p>
         
@@ -165,16 +169,26 @@ foreach ($likes_dislikes as $ld) {
         </div>
 
         <div class="mt-4">
-            <h5>View the result</h5> 
+            <h5>Prompt Result</h5>
             <?php
             if ($result_type === 'text' || $result_type === 'pdf' || $result_type === 'docx') {
                 $files = explode(',', $result_path);
                 foreach ($files as $file) {
                     $file_name = basename($file);
-                    echo "<div class='mb-3'>
+                    echo "
+
+                    
+                    <div class='mb-3'>
                             <a href='$file' class='btn btn-primary' download='$file_name'>$file_name</a>
                           </div>";
                 }
+                echo " 
+                      <div class='mt-3'>
+                        <form method='post' action='prompt_monk_chatbot.php'>
+                            <textarea name='prompt' class='form-control' rows='3'  >" . htmlspecialchars($prompt['prompt']) . "</textarea>
+                            <button type='submit' class='btn btn-primary mt-2'>Send to Gemini AI</button>
+                        </form>
+                      </div>";
             } elseif ($result_type === 'video') {
                 echo "<div class='embed-responsive embed-responsive-16by9'>
                         <video controls class='embed-responsive-item'>
